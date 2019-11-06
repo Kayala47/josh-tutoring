@@ -4,8 +4,6 @@
 #word -> 01010101010
 
 #primitives
-#hey, this was Kevin
-# hi my name is josh
 
 letterDictionary = {
     'A': 10111110,
@@ -52,11 +50,11 @@ for key in letterDictionary:
     #flip: dictionary[value] = key
     binaryDictionary[value] = key
     
-    
+'''
 for key in binaryDictionary:
     print("key is " + str(key))
     print("value is " + binaryDictionary.get(key))
-
+'''
     
 #command to get a value out of a dictionary:
 
@@ -73,14 +71,22 @@ To get the value, use the key. dictionary.get(key) = value
 
 # "word" = "w" + "o" + "r" + "d"
 
-'''
+
 def word_to_binary(word):
 
+    #capitalizes the word so that we have standard way to access dictionary
     capitalWord = word.upper()
+
+    #creates a string to hold our answer
     string = ""
-    
+
+    #loop through every character (letter) in word
     for char in capitalWord:
+
+        #prints out the character (for testing)
         print(char)
+
+        #adds the binary that we get from that letter to our answer
         string = string + str(letterDictionary.get(char))
 
     print(string)
@@ -90,5 +96,30 @@ def word_to_binary(word):
 word = input('What do you want to turn into binary?')
 
 word_to_binary(word)
-        
-'''
+
+
+def binary_to_word(binaryNumber):
+
+    '''
+    string = str(binaryNumber)
+
+    for num in binaryNumber:
+        string = string + str(binaryDictionary.get(num))
+
+    print(string)
+    '''
+
+    #turn binaryNumber into a string
+
+    #make another string to hold the answer
+
+    #make a loop that goes through and touches only every 8th number
+        #add to the answer string from the value we get in binaryDictionary
+
+
+    #print the answer out as a string
+
+    
+        #every 8 letters!
+    #have to turn the number into a string first
+
