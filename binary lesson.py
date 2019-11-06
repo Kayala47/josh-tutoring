@@ -4,6 +4,7 @@
 #word -> 01010101010
 
 #primitives
+#hey, this was Kevin
 
 letterDictionary = {
     'A': 10111110,
