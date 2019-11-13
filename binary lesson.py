@@ -110,13 +110,33 @@ def binary_to_word(binaryNumber):
     '''
 
     #turn binaryNumber into a string
+        #changing from one object type to another is called CASTING
 
+    inputString = str(binaryNumber)
+    
     #make another string to hold the answer
+    outputString = ""
 
     #make a loop that goes through and touches only every 8th number
         #add to the answer string from the value we get in binaryDictionary
 
+    # we will need a nested array
+    outsideList = ()
 
+    
+    for letter in inputString:
+        insideList = ()
+
+        insideList.add(letter)
+
+        if (insideList.size() == 8):
+            #start new inside list
+
+            outsideList.add(insideList)
+            
+        
+
+        
     #print the answer out as a string
 
     
