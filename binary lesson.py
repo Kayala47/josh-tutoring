@@ -130,6 +130,10 @@ def binary_to_word(binaryNumber):
         insideList.add(letter)
 
         if (insideList.size() == 8):
+            #translate that section
+
+            #erase the old list
+
             #start new inside list
 
             outsideList.add(insideList)
