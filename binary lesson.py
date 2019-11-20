@@ -40,6 +40,7 @@ binaryDictionary = {
 
 }
 
+#this is flipping the letterDictionary to turn into binaryDictionary
 for key in letterDictionary:
 
 
@@ -92,11 +93,6 @@ def word_to_binary(word):
     print(string)
 
 
-#here is where we do the work
-word = input('What do you want to turn into binary?')
-
-word_to_binary(word)
-
 
 def binary_to_word(binaryNumber):
 
@@ -121,29 +117,52 @@ def binary_to_word(binaryNumber):
         #add to the answer string from the value we get in binaryDictionary
 
     # we will need a nested array
-    outsideList = ()
+    insideList = []
 
-    
     for letter in inputString:
-        insideList = ()
+        
+        insideList.append(letter)
 
-        insideList.add(letter)
+        if (len(insideList) == 8):
+            #turn back into numbers
+            number = int("".join(insideList))
 
-        if (insideList.size() == 8):
             #translate that section
-
-            #erase the old list
-
-            #start new inside list
-
-            outsideList.add(insideList)
+            outputString = outputString + binaryDictionary.get(number)
             
-        
+            #erase the old list
+            insideList.clear()
 
-        
+            
     #print the answer out as a string
+    print(outputString)
 
     
         #every 8 letters!
     #have to turn the number into a string first
 
+def main():
+
+    userInput = input("What do you want to do? Binary to word (1) or word to binary (2)")
+
+    answer = int(userInput)
+    
+    if answer == 1:
+        #binary to word
+        binaryNum = int(input("input the number here"))
+
+        binary_to_word(binaryNum)
+
+    elif(answer == 2):
+        #word to binary
+        inputWord = input("input the word here")
+
+        word_to_binary(inputWord)
+        
+    else:
+        #neither of those were entered
+        print("Error: please choose '1' or '2'")
+        main()
+    
+
+main()
