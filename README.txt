@@ -117,5 +117,6 @@ Objects:
    char.split()#they don't havfe this function
    String.split()#string has built in functions, which each take up space
    -Kevin
-
+   
+Scope & Hierarchy:
 
