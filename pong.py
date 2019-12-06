@@ -4,14 +4,25 @@ pygame.init()
 size = (width, height) = 800, 600
 
 def increase_speed(ballSpeed):
-    addingSpeed = 0.01
-        
-    ballSpeed[0] = addingSpeed + ballSpeed[0]
-    #gives that variable a new value
-    ballSpeed[1] = ballSpeed[1] + addingSpeed
-        
-    
+    changingSpeed = 0.1
 
+    #gives that variable a new value
+    
+    if (ballSpeed[0] > 0):
+        #add
+         ballSpeed[0] = ballSpeed[0] + changingSpeed
+    else:
+        #subtract
+         ballSpeed[0] = ballSpeed[0] - changingSpeed
+   
+    if (ballSpeed[1] > 0):
+        #add
+        ballSpeed[1] = ballSpeed[1] + changingSpeed
+    else:
+        #subtract
+        ballSpeed[1] = ballSpeed[1] - changingSpeed
+    
+        
 ballSpeed = [2, 2]
 paddleSpeed = [0,1]
 
@@ -33,11 +44,13 @@ ballrect = ballrect.move(startPos)
 while 1:
     for event in pygame.event.get():
         if event.type == pygame.QUIT: sys.exit()
-
- 
     
     ballrect = ballrect.move(ballSpeed)
     paddleRect = paddleRect.move(paddleSpeed)
+
+    #JOSH - your hw is to figure out how to change it so that it only
+    #goes the other direction when it ACTUALLY hits the paddle.Otherwise
+    # it should keep going
 
     if ballrect.right > width:
         #if the ball hits the paddle or the wall, reverses
@@ -48,6 +61,7 @@ while 1:
         #if the ball hits the paddle
         ballSpeed[0] = -ballSpeed[0] #still flip speed
         increase_speed(ballSpeed)#increase speed
+        print(ballSpeed)
 
     if (ballrect.top < 0 or ballrect.bottom > height):
         #if ball hits top or bottom, goes in reverse
