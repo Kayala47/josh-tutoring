@@ -119,4 +119,6 @@ Objects:
    -Kevin
    
 Scope & Hierarchy:
+scope is when even thought you might need somthing ahead that your code.
+     -josh
 
