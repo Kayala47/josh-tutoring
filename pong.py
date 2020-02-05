@@ -4,7 +4,7 @@ pygame.init()
 size = width, height =   800, 600
 
 def increase_speed(speed):
-    changingSpeed = 0.1
+    changingSpeed = 0.5
 
     #gives that variable a new value
     
@@ -23,7 +23,7 @@ def increase_speed(speed):
         speed[1] = speed[1] - changingSpeed
 
 
-speed = [1.5,1.5 ]
+speed = [2,2]
 paddleSpeed = [0,1.5]
 black = 0, 0, 0
 
@@ -47,16 +47,17 @@ while 1:
     ballrect = ballrect.move(speed)
     paddlerect = paddlerect.move(paddleSpeed)
 
-    #JOSH - your hw is to figure out how to change it so that it only
-    #goes the other direction when it ACTUALLY hits the paddle.Otherwise
-    # it should keep going
+    
+    if (paddleRect.bottom >= ballRect.top and paddle.right >= ball.right) or (paddleRect.top <= ball.bottom and paddle.right >= ball.right):
+        #misses
+    
 
-    if ballrect.right > width:
+    else if ballrect.right > width:
         #if the ball hits the paddle or the wall, reverses
         speed[0] = -speed[0]
     #every time it hits the right side, scores a point
     
-    if ballrect.left <= paddlerect.right:
+    else if ballrect.left <= paddlerect.right:
         #if the ball hits the paddle
         speed[0] = -speed[0] #still flip speed
         increase_speed(speed)#increase speed
@@ -66,10 +67,19 @@ while 1:
         #if ball hits top or bottom, goes in reverse
         speed[1] = -speed[1]
 
-    if (paddlerect.bottom >= height) or (paddlerect.top <= 0):
+    if (paddleRect.bottom >= height) or (paddlerect.top <= 0):
         #if paddle touches top or bottom, reverses
         paddleSpeed[1] = -paddleSpeed[1]
-        
+
+    if (paddle.left >= ball.right):
+        #ball passed the paddle
+        del ball
+
+#JOSH: your hw is to create a function (ball()) that:
+        #create a new ball
+        #give the new ball a starting position
+        #start the ball moving
+    
     
     #tell the user how many points they have - update the scoreboard
 
