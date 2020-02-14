@@ -24,7 +24,7 @@ def increase_speed(speed):
 
 
 speed = [2,2]
-paddleSpeed = [0,1.5]
+paddleSpeed = [0,2]
 black = 0, 0, 0
 
 screen = pygame.display.set_mode(size)
