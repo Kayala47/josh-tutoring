@@ -124,3 +124,4 @@ scope is when even thought you might need somthing ahead that your code.
      
      Scope is what we use to describe variables. There are usually two: global and local. Global would mean that you declare the variable outside a function and can use it anywhere. Local variables are declared inside a function and can only be used inside of it.
 
+testing
