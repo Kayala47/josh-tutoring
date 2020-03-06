@@ -1,0 +1,47 @@
+HTML/CSS Lesson:
+
+html is for structure, and CSS is for style. 
+- html controls what is in the page, css is how it looks
+(Javascript is functionality: movement, interaction, background)
+
+Structure of a webpage: (HTML)
+
+- tags
+	open tag and a close tag that work together. They surround
+	an element to tell html what that element is
+
+- structure
+	html tag, then head tag, then body tag
+	in the body, you can put all the elements that you want to be 
+	seen on the page
+	
+	in the head, you only put elements that are important to the browser 
+	but CANNOT be seen
+
+- important tags:
+	HTML
+	head
+	body
+	headers: 1 - 6...
+	paragraphs
+	div
+
+- Classes and IDs
+	classes - can be assigned using the class="" attribute, and 
+	you can add a class to any element and any number of elements
+	
+	ID - specific name for a tag. Can only be given to one thing
+
+
+Styling (CSS):
+ - CSS = Cascading Style Sheet
+
+	using CSS, we can select elements from the page and give them
+	a specific style (color, shape, size, etc.)
+
+	Rule: more specific beats less specific and further down on
+	on page beats higher up on page
+		- ID > classes > tags
+	. = class
+	# = ID
+		
