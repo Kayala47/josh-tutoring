@@ -1,0 +1,25 @@
+body{
+    
+    background-color: rgb(102, 204, 255);
+    color: rgb(0,0,0)
+}
+
+h1{
+    
+    font-family: "Courier New", Times, serif;
+    
+}
+
+h2{
+    color: grey
+    
+}
+
+#blue{
+    color:blue
+}
+
+.not-grey{
+    color: red;
+}
+
