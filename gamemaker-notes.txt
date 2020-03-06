@@ -1,0 +1,8 @@
+GameMaker
+
+Sprite: anything that moves
+Object: things that you can add code to. They take a sprite as an input
+
+Frames: snapshot of the game
+Framerate: how fast it displays frames
+We are at 60fps - 60 frames per second.
