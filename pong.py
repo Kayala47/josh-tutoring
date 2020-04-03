@@ -1,26 +1,27 @@
 import sys,pygame
 pygame.init()
 
-size = width, height =   800, 600
+size = width, height =   800, 800
 
 def increase_speed(speed):
-    changingSpeed = 0.5
+    changingSpeed = 0.1
+    speedLimit = 4
 
     #gives that variable a new value
     
     if (speed[0] > 0):
         #add
-         speed[0] = speed[0] + changingSpeed
+        speed[0] = min(speed[0] + changingSpeed, speedLimit)
     else:
         #subtract
-         speed[0] = speed[0] - changingSpeed
+        speed[0] = max(speed[0] - changingSpeed, -speedLimit)
    
     if (speed[1] > 0):
         #add
-        speed[1] = speed[1] + changingSpeed
+        speed[1] = min(speed[1] + changingSpeed, speedLimit)
     else:
         #subtract
-        speed[1] = speed[1] - changingSpeed
+        speed[1] = max(speed[1] - changingSpeed, -speedLimit)
 
 
 speed = [2,2]
@@ -29,8 +30,8 @@ black = 0, 0, 0
 
 screen = pygame.display.set_mode(size)
 
-ball = pygame.image.load("ball.png")
-paddle = pygame.image.load("blue-paddle.png")
+ball = pygame.image.load("ball.png").convert()
+paddle = pygame.image.load("blue-paddle.png").convert()
 
 ballRect = ball.get_rect()
 paddleRect = paddle.get_rect()
@@ -48,7 +49,7 @@ while 1:
     paddleRect = paddleRect.move(paddleSpeed)
 
     
-    if (paddleRect.bottom >= ballRect.top and paddle.right >= ball.right) or (paddleRect.top <= ball.bottom and paddle.right >= ball.right):
+    if (paddleRect.right >= ballRect.right) and (paddleRect.bottom >= ballRect.top or paddleRect.top <= ballRect.bottom ):
         #misses
         print("missed")
     
@@ -58,7 +59,7 @@ while 1:
         speed[0] = -speed[0]
     #every time it hits the right side, scores a point
     
-    elif ballRect.left <= paddleRect.right:
+    elif ballRect.left <= paddleRect.right and ballRect.top >= paddleRect.top and ballRect.bottom <= paddleRect.bottom:
         #if the ball hits the paddle
         speed[0] = -speed[0] #still flip speed
         increase_speed(speed)#increase speed
@@ -72,7 +73,7 @@ while 1:
         #if paddle touches top or bottom, reverses
         paddleSpeed[1] = -paddleSpeed[1]
 
-    if (paddle.left >= ball.right):
+    if (paddleRect.left >= ballRect.right):
         #ball passed the paddle
         del ball
 
