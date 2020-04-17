@@ -1,7 +1,15 @@
 import sys,pygame
+from ball import Ball
+from paddle import Paddle
+
 pygame.init()
 
 size = width, height =   800, 800
+screen = pygame.display.set_mode(size)
+pygame.display.set_caption("Ping Pong")
+
+all_sprites = pygame.sprite.Group()
+
 
 def increase_speed(speed):
     changingSpeed = 0.1
@@ -24,18 +32,25 @@ def increase_speed(speed):
         speed[1] = max(speed[1] - changingSpeed, -speedLimit)
 
 
+    
+
+    
 speed = [2,2]
 paddleSpeed = [0,2]
 black = 0, 0, 0
 
 screen = pygame.display.set_mode(size)
 
-ball = pygame.image.load("ball.png").convert()
 paddle = pygame.image.load("blue-paddle.png").convert()
+
+ball = Ball(0,0,0)
+
+all_sprites.add(ball)
 
 ballRect = ball.get_rect()
 paddleRect = paddle.get_rect()
 
+all_sprites.draw(screen)
 
 startPos = [width/2,height/2]
 ballRect = ballRect.move(startPos)
@@ -63,7 +78,7 @@ while 1:
         #if the ball hits the paddle
         speed[0] = -speed[0] #still flip speed
         increase_speed(speed)#increase speed
-        print(speed)
+        #print(speed)
 
     if (ballRect.top < 0 or ballRect.bottom > height):
         #if ball hits top or bottom, goes in reverse
@@ -75,18 +90,19 @@ while 1:
 
     if (paddleRect.left >= ballRect.right):
         #ball passed the paddle
-        del ball
+        #del ball
+        print("ball went past paddle")
 
 #JOSH: your hw is to create a function (ball()) that:
         #create a new ball
         #give the new ball a starting position
         #start the ball moving
-    
+ 
     
     #tell the user how many points they have - update the scoreboard
 
     screen.fill(black)
-    screen.blit(ball, ballRect)
+    #screen.blit(ball, ballRect)
     screen.blit(paddle, paddleRect)
     pygame.display.flip()
 
