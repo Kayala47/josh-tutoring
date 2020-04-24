@@ -15,11 +15,11 @@ class Paddle(pygame.sprite.Sprite):
 
         #add top and bottom measurements
         self.top = y
-        self.bottom = y + height
+        self.bottom = y + self.height
 
         #add left and right
         self.left = x
-        self.right = x + width
+        self.right = x + self.width
  
         # Fetch the rectangle object that has the dimensions of the image.
         self.rect = self.image.get_rect()
