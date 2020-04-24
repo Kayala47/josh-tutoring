@@ -98,17 +98,14 @@ while carryOn:
         if ball.rect.y > SCREENHEIGHT - ball.height or ball.rect.y < 0:
             speed[1] = -speed[1]
 
-        print("ball y = " + str(ball.rect.y))
-        print("paddle y = " + str(paddle.rect.y))
+        #print("ball y = " + str(ball.rect.y))
+        #print("paddle y = " + str(paddle.rect.y))
         if (ball.rect.x <= paddle.rect.x + paddle.width
             and (ball.rect.y + ball.height < paddle.rect.y + paddle.height
             or ball.rect.y > paddle.rect.y)):
             #ball hit paddle
             increase_speed(speed)
             speed[0] = -speed[0]
-
-        
-
 
 
         ball.move(speed[0], speed[1])

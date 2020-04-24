@@ -12,6 +12,14 @@ class Paddle(pygame.sprite.Sprite):
         self.image = pygame.image.load("blue-paddle.png").convert_alpha()
         self.width = self.image.get_width()
         self.height = self.image.get_height()
+
+        #add top and bottom measurements
+        self.top = y
+        self.bottom = y + height
+
+        #add left and right
+        self.left = x
+        self.right = x + width
  
         # Fetch the rectangle object that has the dimensions of the image.
         self.rect = self.image.get_rect()
