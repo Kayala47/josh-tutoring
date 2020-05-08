@@ -9,19 +9,27 @@ class Ball(pygame.sprite.Sprite):
         
         super().__init__()
 
-        print("ball created at" + str(x) + " " + str(y))
-
         self.image = pygame.image.load("ball.png").convert_alpha()
         self.width = self.image.get_width()
         self.height = self.image.get_height()
+
+        self.rect = self.image.get_rect(topleft = (x, y))
         
-       # self.image = pygame.Surface([10,10])
+        #self.image = pygame.Surface([10,10])
         #self.image.fill(WHITE)
         self.image.set_colorkey((0,0,0))
 
         #pygame.draw.rect(self.image, WHITE, [10,10, 10, 10])
 
-        self.rect = self.image.get_rect()
+        #add top and bottom measurements
+        self.top = self.rect.y
+        self.bottom = self.rect.y + self.height
+
+        #add left and right
+        self.left = self.rect.x
+        self.right = self.rect.x + self.width
+ 
+
 
     def get_rect(self):
         return self.rect
@@ -29,3 +37,12 @@ class Ball(pygame.sprite.Sprite):
     def move(self, x, y):
         self.rect.x += x
         self.rect.y += y
+
+        #add top and bottom measurements
+        self.top = self.rect.y
+        self.bottom = self.rect.y + self.height
+
+        #add left and right
+        self.left = self.rect.x
+        self.right = self.rect.x + self.width
+        

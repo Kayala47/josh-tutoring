@@ -8,22 +8,35 @@ class Paddle(pygame.sprite.Sprite):
         # Call the parent class (Sprite) constructor
         super().__init__()
  
-        # Instead we could load a proper pciture of a car...
+        # Instead we could
         self.image = pygame.image.load("blue-paddle.png").convert_alpha()
+        
         self.width = self.image.get_width()
         self.height = self.image.get_height()
 
-        #add top and bottom measurements
-        self.top = y
-        self.bottom = y + self.height
-
-        #add left and right
-        self.left = x
-        self.right = x + self.width
- 
         # Fetch the rectangle object that has the dimensions of the image.
         self.rect = self.image.get_rect()
+
+        #add top and bottom measurements
+        self.top = self.rect.y
+        self.bottom = self.rect.y + self.height
+
+        #add left and right
+        self.left = self.rect.x
+        self.right = self.rect.x + self.width
+ 
+        
 
     def move(self, x, y):
         self.rect.x += x
         self.rect.y += y
+
+        #add top and bottom measurements
+        self.top = self.rect.y
+        self.bottom = self.rect.y + self.height
+
+        #add left and right
+        self.left = self.rect.x
+        self.right = self.rect.x + self.width
+ 
+
