@@ -119,6 +119,5 @@ Now you should see it work!
 
 Alrighty! Now that you've got the ball up and running, I want you to use these same instructions to make the paddle a sprite as well. It shouldn't take much modification, but here is where you're going to make sure that you actually understood all of this. 
 
-Lastly, you'll notice there's a "branch" tab at the top of the github page. I've posted my answers in the "kvin-answers" branch. If you're really really stuck, the full answer is in "pong2.py". If you have any more questions, email me at ayala.kevin99@gmail.com. Happy coding, Josh!
 
 

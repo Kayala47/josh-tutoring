@@ -12,7 +12,9 @@ PURPLE = (255, 0, 255)
 BLACK = (0,0,0)
         
 SCREENWIDTH=800
+
 SCREENHEIGHT=650
+
 
 speed = [4,4]
 paddleSpeed = [0,4]
@@ -36,7 +38,32 @@ def increase_speed(speed):
     else:
         #subtract
         speed[1] = max(speed[1] - changingSpeed, -speedLimit)
- 
+
+
+
+def removeBall(ball, spritesList):
+
+    spritesList.remove(ball)
+
+    ball.kill()
+    ball = Ball(SCREENWIDTH/2, SCREENHEIGHT/2, 0)
+    ball.rect.x = 200
+    ball.rect.y = 300
+
+    spritesList.add(ball)
+
+    return ball
+    
+def updatePaddle(paddle):
+    keyPressed = pygame.key.get_pressed()
+    if keyPressed[pygame.K_UP]:
+        if (paddle.rect.top - 10 >= 0):
+            paddle.move(0, -10)
+    elif keyPressed[pygame.K_DOWN]:
+        if (paddle.rect.bottom + 10 <= SCREENHEIGHT):
+            paddle.move(0, 10)
+            
+
 size = (SCREENWIDTH, SCREENHEIGHT)
 screen = pygame.display.set_mode(size)
 pygame.display.set_caption("Ping Pong")
@@ -50,22 +77,45 @@ ball.rect.x = 200
 ball.rect.y = 300
 
 #create the paddle
+
+paddle = Paddle("blue")
+paddle.rect.x = 0
+paddle.rect.y = 0
+
+redPaddle = Paddle("red")
+redPaddle.rect.x = SCREENWIDTH - redPaddle.width
+paddle.rect.y = 0
+
 paddle = Paddle(WHITE)
+
  
 # Add the ball to the list of objects
 all_sprites_list.add(ball)
 all_sprites_list.add(paddle)
+
+all_sprites_list.add(redPaddle)
+
  
 #Allowing the user to close the window...
 carryOn = True
 clock=pygame.time.Clock()
  
 while carryOn:
+
+        for event in pygame.event.get():
+            if event.type==pygame.QUIT:
+                carryOn=False
+
+        updatePaddle(paddle)
+        updatePaddle(redPaddle)
+        
+
         
         for event in pygame.event.get():
             if event.type==pygame.QUIT:
                 carryOn=False
                 
+
         #Game Logic
         all_sprites_list.update()
  
@@ -75,11 +125,49 @@ while carryOn:
         #Now let's draw all the sprites in one go. (For now we only have 1 sprite!)
         all_sprites_list.draw(screen)
 
-        
-            
+
         #paddle movement
         if paddle.rect.y > SCREENHEIGHT - paddle.height or paddle.rect.y < 0:
             paddleSpeed[1] = -paddleSpeed[1]
+
+
+        
+        #ball movement
+
+
+        #hitting edges
+
+        if paddle.rect.colliderect(ball.rect):
+            #ball hit left paddle
+            increase_speed(speed)
+            speed[0] = -speed[0]
+
+        elif redPaddle.rect.colliderect(ball.rect):
+            #ball hit right paddle
+            increase_speed(speed)
+            speed[0] = -speed[0]
+            
+        elif ball.right <= paddle.right or ball.left >= redPaddle.left:
+            print("missed")
+            ball = removeBall(ball, all_sprites_list)
+            speed = [4,4]
+
+        if ((paddle.top > ball.bottom and ball.right <= paddle.right) or
+        (paddle.bottom < ball.top and ball.right <= paddle.right)):
+            #ball goes through left side
+            print("missed")
+            ball = removeBall(ball, all_sprites_list)
+            speed = [4,4]
+
+        elif ((redPaddle.top > ball.bottom and ball.left >= redPaddle.left) or
+        (redPaddle.bottom < ball.top and ball.left >= redPaddle.left)):
+            #ball goes through right side
+            print("missed")
+            ball = removeBall(ball, all_sprites_list)
+            speed = [4,4]
+
+        elif ball.rect.x > SCREENWIDTH - ball.width:
+            speed[0] = -speed[0]
 
         paddle.move(paddleSpeed[0], paddleSpeed[1])
         
@@ -116,9 +204,15 @@ while carryOn:
         else:
             pass
 
+
         if ball.rect.y > SCREENHEIGHT - ball.height or ball.rect.y < 0:
             speed[1] = -speed[1]
 
+        
+
+
+        #paddle.move(paddleSpeed[0], paddleSpeed[1])
+        
         #print("ball y = " + str(ball.rect.y))
         #print("paddle y = " + str(paddle.rect.y))
         if (ball.rect.x <= paddle.rect.x + paddle.width
@@ -127,7 +221,6 @@ while carryOn:
             #ball hit paddle
             increase_speed(speed)
             speed[0] = -speed[0]
-
 
         ball.move(speed[0], speed[1])
  
