@@ -54,16 +54,24 @@ def removeBall(ball, spritesList):
 
     return ball
     
-def updatePaddle(paddle):
+def updatePaddle(paddle, upDown):
     keyPressed = pygame.key.get_pressed()
-    if keyPressed[pygame.K_UP]:
+
+    (up, down) = upDown
+
+    #red uses arrow keys
+    #blue should use wasd, really just w = up, s = down
+    if keyPressed[up]:
         if (paddle.rect.top - 10 >= 0):
             paddle.move(0, -10)
-    elif keyPressed[pygame.K_DOWN]:
+    elif keyPressed[down]:
         if (paddle.rect.bottom + 10 <= SCREENHEIGHT):
             paddle.move(0, 10)
-            
 
+
+    
+    
+    
 size = (SCREENWIDTH, SCREENHEIGHT)
 screen = pygame.display.set_mode(size)
 pygame.display.set_caption("Ping Pong")
@@ -106,8 +114,8 @@ while carryOn:
             if event.type==pygame.QUIT:
                 carryOn=False
 
-        updatePaddle(paddle)
-        updatePaddle(redPaddle)
+        updatePaddle(paddle, (pygame.K_w, pygame.K_s))
+        updatePaddle(redPaddle, (pygame.K_UP, pygame.K_DOWN))
         
 
         
@@ -148,69 +156,25 @@ while carryOn:
             speed[0] = -speed[0]
             
         elif ball.right <= paddle.right or ball.left >= redPaddle.left:
-            print("missed")
             ball = removeBall(ball, all_sprites_list)
             speed = [4,4]
 
         if ((paddle.top > ball.bottom and ball.right <= paddle.right) or
         (paddle.bottom < ball.top and ball.right <= paddle.right)):
             #ball goes through left side
-            print("missed")
             ball = removeBall(ball, all_sprites_list)
             speed = [4,4]
 
         elif ((redPaddle.top > ball.bottom and ball.left >= redPaddle.left) or
         (redPaddle.bottom < ball.top and ball.left >= redPaddle.left)):
             #ball goes through right side
-            print("missed")
             ball = removeBall(ball, all_sprites_list)
             speed = [4,4]
-
-        elif ball.rect.x > SCREENWIDTH - ball.width:
-            speed[0] = -speed[0]
-
-        paddle.move(paddleSpeed[0], paddleSpeed[1])
-        
-        
-        #ball movement
-
-        #hitting edges
-        if ball.rect.x > SCREENWIDTH - ball.width:
-            speed[0] = -speed[0]
-        elif ball.rect.x < 0:
-            #paddle missed
-            print("missed")
-            ball.kill()
-            ball = Ball(SCREENWIDTH/2, SCREENHEIGHT/2, 0)
-            ball.rect.x = 200
-            ball.rect.y = 300
-            
-        if paddle.top > ball.bottom and ball.right <= paddle.right:
-            print("missed")
-            ball.kill()
-            ball = Ball(SCREENWIDTH/2, SCREENHEIGHT/2, 0)
-            ball.rect.x = 200
-            ball.rect.y = 300
-
-        else:
-            pass
-
-        if paddle.bottom < ball.top and ball.right <= paddle.right:
-            print("missed")
-            ball.kill()
-            ball = Ball(SCREENWIDTH/2, SCREENHEIGHT/2, 0)
-            ball.rect.x = 200
-            ball.rect.y = 300
-        else:
-            pass
-
 
         if ball.rect.y > SCREENHEIGHT - ball.height or ball.rect.y < 0:
             speed[1] = -speed[1]
 
-        
-
-
+    
         #paddle.move(paddleSpeed[0], paddleSpeed[1])
         
         #print("ball y = " + str(ball.rect.y))
