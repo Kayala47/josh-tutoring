@@ -1,18 +1,24 @@
-import sys,pygame
+import pygame, random
+
 from ball import Ball
 from paddle import Paddle
-
 pygame.init()
+ 
+GREEN = (20, 255, 140)
+GREY = (210, 210 ,210)
+WHITE = (255, 255, 255)
+RED = (255, 0, 0)
+PURPLE = (255, 0, 255)
+BLACK = (0,0,0)
+        
+SCREENWIDTH=800
+SCREENHEIGHT=800
 
-size = width, height =   800, 800
-screen = pygame.display.set_mode(size)
-pygame.display.set_caption("Ping Pong")
-
-all_sprites = pygame.sprite.Group()
-
+speed = [4,4]
+paddleSpeed = [0,4]
 
 def increase_speed(speed):
-    changingSpeed = 0.1
+    changingSpeed = 1
     speedLimit = 4
 
     #gives that variable a new value
@@ -32,77 +38,134 @@ def increase_speed(speed):
         speed[1] = max(speed[1] - changingSpeed, -speedLimit)
 
 
-    
+def removeBall(ball, spritesList):
 
-    
-speed = [2,2]
-paddleSpeed = [0,2]
-black = 0, 0, 0
+    spritesList.remove(ball)
 
+    ball.kill()
+    ball = Ball(SCREENWIDTH/2, SCREENHEIGHT/2, 0)
+    ball.rect.x = 200
+    ball.rect.y = 300
+
+    spritesList.add(ball)
+
+    return ball
+    
+def updatePaddle(paddle):
+    keyPressed = pygame.key.get_pressed()
+    if keyPressed[pygame.K_UP]:
+        if (paddle.rect.top - 10 >= 0):
+            paddle.move(0, -10)
+    elif keyPressed[pygame.K_DOWN]:
+        if (paddle.rect.bottom + 10 <= SCREENHEIGHT):
+            paddle.move(0, 10)
+            
+    
+    
+size = (SCREENWIDTH, SCREENHEIGHT)
 screen = pygame.display.set_mode(size)
-
-paddle = pygame.image.load("blue-paddle.png").convert()
-
-ball = Ball(0,0,0)
-
-all_sprites.add(ball)
-
-ballRect = ball.get_rect()
-paddleRect = paddle.get_rect()
-
-all_sprites.draw(screen)
-
-startPos = [width/2,height/2]
-ballRect = ballRect.move(startPos)
-
-
-while 1:
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT: sys.exit()
-    
-    ballRect = ballRect.move(speed)
-    paddleRect = paddleRect.move(paddleSpeed)
-
-    
-    if (paddleRect.right >= ballRect.right) and (paddleRect.bottom >= ballRect.top or paddleRect.top <= ballRect.bottom ):
-        #misses
-        print("missed")
-    
-
-    elif ballRect.right > width:
-        #if the ball hits the the wall, reverses
-        speed[0] = -speed[0]
-    #every time it hits the right side, scores a point
-    
-    elif ballRect.left <= paddleRect.right and ballRect.top >= paddleRect.top and ballRect.bottom <= paddleRect.bottom:
-        #if the ball hits the paddle
-        speed[0] = -speed[0] #still flip speed
-        increase_speed(speed)#increase speed
-        #print(speed)
-
-    if (ballRect.top < 0 or ballRect.bottom > height):
-        #if ball hits top or bottom, goes in reverse
-        speed[1] = -speed[1]
-
-    if (paddleRect.bottom >= height) or (paddleRect.top <= 0):
-        #if paddle touches top or bottom, reverses
-        paddleSpeed[1] = -paddleSpeed[1]
-
-    if (paddleRect.left >= ballRect.right):
-        #ball passed the paddle
-        #del ball
-        print("ball went past paddle")
-
-#JOSH: your hw is to create a function (ball()) that:
-        #create a new ball
-        #give the new ball a starting position
-        #start the ball moving
+pygame.display.set_caption("Ping Pong")
  
-    
-    #tell the user how many points they have - update the scoreboard
+#This will be a list that will contain all the sprites we intend to use in our game.
+all_sprites_list = pygame.sprite.Group()
 
-    screen.fill(black)
-    #screen.blit(ball, ballRect)
-    screen.blit(paddle, paddleRect)
-    pygame.display.flip()
+#create the ball
+ball = Ball(SCREENWIDTH/2, SCREENHEIGHT/2, 0)
+ball.rect.x = 200
+ball.rect.y = 300
 
+#create the paddle
+paddle = Paddle("blue")
+paddle.rect.x = 0
+paddle.rect.y = 0
+
+redPaddle = Paddle("red")
+redPaddle.rect.x = SCREENWIDTH - redPaddle.width
+paddle.rect.y = 0
+ 
+# Add the ball to the list of objects
+all_sprites_list.add(ball)
+all_sprites_list.add(paddle)
+all_sprites_list.add(redPaddle)
+ 
+#Allowing the user to close the window...
+carryOn = True
+clock=pygame.time.Clock()
+ 
+while carryOn:
+        for event in pygame.event.get():
+            if event.type==pygame.QUIT:
+                carryOn=False
+
+        updatePaddle(paddle)
+        updatePaddle(redPaddle)
+        
+        #Game Logic
+        all_sprites_list.update()
+ 
+        #Drawing on Screen
+        screen.fill(BLACK)
+        
+        #Now let's draw all the sprites in one go. (For now we only have 1 sprite!)
+        all_sprites_list.draw(screen)
+
+        #paddle movement
+        if paddle.rect.y > SCREENHEIGHT - paddle.height or paddle.rect.y < 0:
+            paddleSpeed[1] = -paddleSpeed[1]
+
+        
+        #ball movement
+
+
+        #hitting edges
+
+        if paddle.rect.colliderect(ball.rect):
+            #ball hit left paddle
+            increase_speed(speed)
+            speed[0] = -speed[0]
+
+        elif redPaddle.rect.colliderect(ball.rect):
+            #ball hit right paddle
+            increase_speed(speed)
+            speed[0] = -speed[0]
+            
+        elif ball.right <= paddle.right or ball.left >= redPaddle.left:
+            print("missed")
+            ball = removeBall(ball, all_sprites_list)
+            speed = [4,4]
+
+        if ((paddle.top > ball.bottom and ball.right <= paddle.right) or
+        (paddle.bottom < ball.top and ball.right <= paddle.right)):
+            #ball goes through left side
+            print("missed")
+            ball = removeBall(ball, all_sprites_list)
+            speed = [4,4]
+
+        elif ((redPaddle.top > ball.bottom and ball.left >= redPaddle.left) or
+        (redPaddle.bottom < ball.top and ball.left >= redPaddle.left)):
+            #ball goes through right side
+            print("missed")
+            ball = removeBall(ball, all_sprites_list)
+            speed = [4,4]
+
+        elif ball.rect.x > SCREENWIDTH - ball.width:
+            speed[0] = -speed[0]
+
+        if ball.rect.y > SCREENHEIGHT - ball.height or ball.rect.y < 0:
+            speed[1] = -speed[1]
+
+        
+
+
+        #paddle.move(paddleSpeed[0], paddleSpeed[1])
+        
+        
+        ball.move(speed[0], speed[1])
+ 
+        #Refresh Screen
+        pygame.display.flip()
+ 
+        #Number of frames per secong e.g. 60
+        clock.tick(60)
+ 
+pygame.quit()
