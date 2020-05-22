@@ -9,7 +9,11 @@ class Paddle(pygame.sprite.Sprite):
         super().__init__()
  
         # Instead we could
-        self.image = pygame.image.load("blue-paddle.png").convert_alpha()
+        if (color == "red"):
+            self.image = pygame.image.load("red-paddle.jpg").convert_alpha()
+        else:
+            self.image = pygame.image.load("blue-paddle.png").convert_alpha()
+
         
         self.width = self.image.get_width()
         self.height = self.image.get_height()

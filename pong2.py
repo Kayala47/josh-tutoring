@@ -78,10 +78,15 @@ ball.rect.y = 300
 paddle = Paddle("blue")
 paddle.rect.x = 0
 paddle.rect.y = 0
+
+redPaddle = Paddle("red")
+redPaddle.rect.x = SCREENWIDTH - redPaddle.width
+paddle.rect.y = 0
  
 # Add the ball to the list of objects
 all_sprites_list.add(ball)
 all_sprites_list.add(paddle)
+all_sprites_list.add(redPaddle)
  
 #Allowing the user to close the window...
 carryOn = True
@@ -93,6 +98,7 @@ while carryOn:
                 carryOn=False
 
         updatePaddle(paddle)
+        updatePaddle(redPaddle)
         
         #Game Logic
         all_sprites_list.update()
@@ -112,29 +118,42 @@ while carryOn:
 
 
         #hitting edges
-        if ball.rect.x > SCREENWIDTH - ball.width:
+
+        if paddle.rect.colliderect(ball.rect):
+            #ball hit left paddle
+            increase_speed(speed)
             speed[0] = -speed[0]
-        elif ball.rect.x < 0:
-            #paddle missed
+
+        elif redPaddle.rect.colliderect(ball.rect):
+            #ball hit right paddle
+            increase_speed(speed)
+            speed[0] = -speed[0]
+        elif ball.right <= paddle.right or ball.left >= redPaddle.left:
             print("missed")
             ball = removeBall(ball, all_sprites_list)
             speed = [4,4]
 
         if ((paddle.top > ball.bottom and ball.right <= paddle.right) or
         (paddle.bottom < ball.top and ball.right <= paddle.right)):
+            #ball goes through left side
             print("missed")
             ball = removeBall(ball, all_sprites_list)
             speed = [4,4]
 
+        elif ((redPaddle.top > ball.bottom and ball.left >= redPaddle.left) or
+        (redPaddle.bottom < ball.top and ball.left >= redPaddle.left)):
+            #ball goes through right side
+            print("missed")
+            ball = removeBall(ball, all_sprites_list)
+            speed = [4,4]
 
+        elif ball.rect.x > SCREENWIDTH - ball.width:
+            speed[0] = -speed[0]
 
         if ball.rect.y > SCREENHEIGHT - ball.height or ball.rect.y < 0:
             speed[1] = -speed[1]
 
-        if paddle.rect.colliderect(ball.rect):
-            #ball hit paddle
-            increase_speed(speed)
-            speed[0] = -speed[0]
+        
 
 
         #paddle.move(paddleSpeed[0], paddleSpeed[1])
