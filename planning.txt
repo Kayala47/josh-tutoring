@@ -1,1 +1,12 @@
-ECHO is on.
+We've just made both paddles work separately
+
+Next Steps:
+- get pictures their own names & position them
+- make sure it actually gets misses correctly. 
+- scoreboard: count every miss & assign points
+	- code to keep track of points
+	- GUI - graphical user interface. A scoreboard that looks nice & 
+		can update itself
+- make one of the paddles independent (AI)
+	- ask players if they want to play 1 or 2 player game
+	- 

@@ -92,6 +92,7 @@ paddle.rect.y = 0
 
 redPaddle = Paddle("red")
 redPaddle.rect.x = SCREENWIDTH - redPaddle.width
+redPaddle.left = SCREENWIDTH - redPaddle.width
 paddle.rect.y = 0
 
 paddle = Paddle(WHITE)
@@ -103,7 +104,10 @@ all_sprites_list.add(paddle)
 
 all_sprites_list.add(redPaddle)
 
- 
+# Tracking points
+redPts = 0
+bluePts = 0
+
 #Allowing the user to close the window...
 carryOn = True
 clock=pygame.time.Clock()
@@ -139,12 +143,6 @@ while carryOn:
             paddleSpeed[1] = -paddleSpeed[1]
 
 
-        
-        #ball movement
-
-
-        #hitting edges
-
         if paddle.rect.colliderect(ball.rect):
             #ball hit left paddle
             increase_speed(speed)
@@ -155,36 +153,36 @@ while carryOn:
             increase_speed(speed)
             speed[0] = -speed[0]
             
-        elif ball.right <= paddle.right or ball.left >= redPaddle.left:
-            ball = removeBall(ball, all_sprites_list)
-            speed = [4,4]
+    
 
         if ((paddle.top > ball.bottom and ball.right <= paddle.right) or
         (paddle.bottom < ball.top and ball.right <= paddle.right)):
             #ball goes through left side
+
+            print("I think it missed the left side")
+            
             ball = removeBall(ball, all_sprites_list)
             speed = [4,4]
+            redPts = redPts + 1
+            print(redPts)
 
         elif ((redPaddle.top > ball.bottom and ball.left >= redPaddle.left) or
         (redPaddle.bottom < ball.top and ball.left >= redPaddle.left)):
             #ball goes through right side
+            print("lt of paddle = " + str(redPaddle.left))
+            print("lt of ball = " + str(ball.left))
+            
+
+            print("I think it missed the right side")
+            
             ball = removeBall(ball, all_sprites_list)
             speed = [4,4]
+            bluePts = bluePts + 1
+            print(bluePts)
 
         if ball.rect.y > SCREENHEIGHT - ball.height or ball.rect.y < 0:
             speed[1] = -speed[1]
 
-    
-        #paddle.move(paddleSpeed[0], paddleSpeed[1])
-        
-        #print("ball y = " + str(ball.rect.y))
-        #print("paddle y = " + str(paddle.rect.y))
-        if (ball.rect.x <= paddle.rect.x + paddle.width
-            and (ball.rect.y + ball.height < paddle.rect.y + paddle.height
-            or ball.rect.y > paddle.rect.y)):
-            #ball hit paddle
-            increase_speed(speed)
-            speed[0] = -speed[0]
 
         ball.move(speed[0], speed[1])
  
