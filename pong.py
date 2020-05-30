@@ -19,6 +19,14 @@ SCREENHEIGHT=650
 speed = [4,4]
 paddleSpeed = [0,4]
 
+font_name = pygame.font.match_font('arial')
+def draw_text(surf, text, size, x, y):
+    font = pygame.font.Font(font_name, size)
+    text_surface = font.render(text, True, WHITE)
+    text_rect = text_surface.get_rect()
+    text_rect.midtop = (x, y)
+    surf.blit(text_surface, text_rect)
+
 def increase_speed(speed):
     changingSpeed = 1
     speedLimit = 4
@@ -68,6 +76,16 @@ def updatePaddle(paddle, upDown):
         if (paddle.rect.bottom + 10 <= SCREENHEIGHT):
             paddle.move(0, 10)
 
+def updateScore(redPts, bluePts):
+    #draw_text = def draw_text(surf, text, size, x, y):
+
+    text = "Red has " + str(redPts) + " points. Blue has " + str(bluePts) + " points."
+    size = 25
+    x = SCREENWIDTH/4
+    y = 10
+
+    font_type = pygame.font.SysFont('arial', size)
+    return font_type.render(text, True, WHITE)
 
     
     
@@ -114,6 +132,7 @@ clock=pygame.time.Clock()
  
 while carryOn:
 
+            
         for event in pygame.event.get():
             if event.type==pygame.QUIT:
                 carryOn=False
@@ -165,20 +184,22 @@ while carryOn:
             speed = [4,4]
             redPts = redPts + 1
             print(redPts)
+            
 
         elif ((redPaddle.top > ball.bottom and ball.left >= redPaddle.left) or
         (redPaddle.bottom < ball.top and ball.left >= redPaddle.left)):
             #ball goes through right side
-            print("lt of paddle = " + str(redPaddle.left))
-            print("lt of ball = " + str(ball.left))
-            
-
-            print("I think it missed the right side")
             
             ball = removeBall(ball, all_sprites_list)
             speed = [4,4]
             bluePts = bluePts + 1
             print(bluePts)
+
+            
+            
+
+            
+            
 
         if ball.rect.y > SCREENHEIGHT - ball.height or ball.rect.y < 0:
             speed[1] = -speed[1]
@@ -187,7 +208,10 @@ while carryOn:
         ball.move(speed[0], speed[1])
  
         #Refresh Screen
+        renderedText = updateScore(redPts, bluePts)
+        screen.blit(renderedText, (SCREENWIDTH/4, 10))
         pygame.display.flip()
+        
  
         #Number of frames per secong e.g. 60
         clock.tick(60)
