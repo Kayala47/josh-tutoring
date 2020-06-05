@@ -126,25 +126,57 @@ all_sprites_list.add(redPaddle)
 redPts = 0
 bluePts = 0
 
+
+    
+def askRestart():
+    yes_no = input("Do you want to play again?(yes/no)")
+    
+    lowercase = yes_no.lower()
+    firstLetter = lowercase[0]
+
+    if (firstLetter == "y"):
+        
+        carryon=True
+        
+    else: 
+        carryOn=False
+
+
+    
+
 #Allowing the user to close the window...
 carryOn = True
 clock=pygame.time.Clock()
  
 while carryOn:
 
-            
+    
+        
+
+        
         for event in pygame.event.get():
-            if event.type==pygame.QUIT:
-                carryOn=False
+            if redPts ==1 or bluePts ==1:
+                redPts = redPts + -redPts
+                bluePts = bluePts + -bluePts
+                
+                #removeBall(ball, all_sprites_list)
+                askRestart()
+                
+                
+                
+                
+                
+        
+                
+                
+                #carryOn=False
 
         updatePaddle(paddle, (pygame.K_w, pygame.K_s))
         updatePaddle(redPaddle, (pygame.K_UP, pygame.K_DOWN))
         
 
         
-        for event in pygame.event.get():
-            if event.type==pygame.QUIT:
-                carryOn=False
+        
                 
 
         #Game Logic
@@ -211,6 +243,9 @@ while carryOn:
         renderedText = updateScore(redPts, bluePts)
         screen.blit(renderedText, (SCREENWIDTH/4, 10))
         pygame.display.flip()
+
+
+      
         
  
         #Number of frames per secong e.g. 60
