@@ -93,15 +93,23 @@ def updatePaddle(paddle, upDown):
         if (paddle.rect.bottom + 10 <= SCREENHEIGHT):
             paddle.move(0, 10)
 
-def updateScore(redPts, bluePts):
+def updateScore(redPts, bluePts, endGame):
     #draw_text = def draw_text(surf, text, size, x, y):
 
-    text = "Red has " + str(redPts) + " points. Blue has " + str(bluePts) + " points."
     size = 25
+    font_type = pygame.font.SysFont('arial', size)
+
+    if not endGame:
+        text = "Red has " + str(redPts) + " points. Blue has " + str(bluePts) + " points."
+    else:
+        text = "Game Over. Press spacebar to play again or x to quit"
+
+    
+    
     x = SCREENWIDTH/4
     y = 10
 
-    font_type = pygame.font.SysFont('arial', size)
+    
     return font_type.render(text, True, WHITE)
 
     
@@ -150,83 +158,100 @@ gameOn = True
 clock=pygame.time.Clock()
 
 
-while gameOn:
- 
-    while playingGame:
+while playingGame:
+    
+    for event in pygame.event.get():
+        if event.type==pygame.QUIT:
+            playingGame=False
+            gameOn = False
+
+    updatePaddle(paddle, (pygame.K_w, pygame.K_s))
+    updatePaddle(redPaddle, (pygame.K_UP, pygame.K_DOWN))
+
+    #Game Logic
+    all_sprites_list.update()
+
+    #Drawing on Screen
+    screen.fill(BLACK)
+    
+    #Now let's draw all the sprites in one go. (For now we only have 1 sprite!)
+    all_sprites_list.draw(screen)
+
+
+    #paddle movement
+    if paddle.rect.y > SCREENHEIGHT - paddle.height or paddle.rect.y < 0:
+        paddleSpeed[1] = -paddleSpeed[1]
+
+
+    if paddle.rect.colliderect(ball.rect):
+        #ball hit left paddle
+        increase_speed(speed)
+        speed[0] = -speed[0]
+
+    elif redPaddle.rect.colliderect(ball.rect):
+        #ball hit right paddle
+        increase_speed(speed)
+        speed[0] = -speed[0]
         
-        for event in pygame.event.get():
-            if event.type==pygame.QUIT:
-                playingGame=False
-                gameOn = False
 
-        updatePaddle(paddle, (pygame.K_w, pygame.K_s))
-        updatePaddle(redPaddle, (pygame.K_UP, pygame.K_DOWN))
 
-        #Game Logic
-        all_sprites_list.update()
-
-        #Drawing on Screen
-        screen.fill(BLACK)
+    if ((paddle.top > ball.bottom and ball.right <= paddle.right) or
+    (paddle.bottom < ball.top and ball.right <= paddle.right)):
+        #ball goes through left side
+        ball = removeBall(ball, all_sprites_list)
+        speed = [4,4]
+        redPts = redPts + 1
         
-        #Now let's draw all the sprites in one go. (For now we only have 1 sprite!)
-        all_sprites_list.draw(screen)
+
+    elif ((redPaddle.top > ball.bottom and ball.left >= redPaddle.left) or
+    (redPaddle.bottom < ball.top and ball.left >= redPaddle.left)):
+        #ball goes through right side
+        
+        ball = removeBall(ball, all_sprites_list)
+        speed = [4,4]
+        bluePts = bluePts + 1
+
+        
+
+    if ball.rect.y > SCREENHEIGHT - ball.height or ball.rect.y < 0:
+        speed[1] = -speed[1]
 
 
-        #paddle movement
-        if paddle.rect.y > SCREENHEIGHT - paddle.height or paddle.rect.y < 0:
-            paddleSpeed[1] = -paddleSpeed[1]
+    ball.move(speed[0], speed[1])
+
+    # if (redPts > 0 or bluePts > 0):
+    #     renderedText = updateScore(redPts, bluePts, False)
+    #     screen.blit(renderedText, (SCREENWIDTH/4, 10))
+    #     pygame.display.flip()
+
+    #     done = False
+
+    #     while not done:
+    #         for event in pygame.event.get():
+    #             if event.type == pygame.KEYDOWN:
+    #                 if event.mod == pygame.K_SPACE:
+    #                     print("space was entered")
+    #                     done = True
+                        
+    #     #     keyPressed = pygame.key.get_pressed()
+    #     #     if (keyPressed == pygame.K_SPACE):
+    #     #         playingGame = True
+    #     #         done = True
+    #     #     elif (keyPressed == pygame.K_x):
+    #     #         playingGame = False
+    #     #         done = True
 
 
-        if paddle.rect.colliderect(ball.rect):
-            #ball hit left paddle
-            increase_speed(speed)
-            speed[0] = -speed[0]
 
-        elif redPaddle.rect.colliderect(ball.rect):
-            #ball hit right paddle
-            increase_speed(speed)
-            speed[0] = -speed[0]
-            
+    #Refresh Screen
+    renderedText = updateScore(redPts, bluePts, False)
+    screen.blit(renderedText, (SCREENWIDTH/4, 10))
+    pygame.display.flip()
     
 
-        if ((paddle.top > ball.bottom and ball.right <= paddle.right) or
-        (paddle.bottom < ball.top and ball.right <= paddle.right)):
-            #ball goes through left side
-            ball = removeBall(ball, all_sprites_list)
-            speed = [4,4]
-            redPts = redPts + 1
-            
-
-        elif ((redPaddle.top > ball.bottom and ball.left >= redPaddle.left) or
-        (redPaddle.bottom < ball.top and ball.left >= redPaddle.left)):
-            #ball goes through right side
-            
-            ball = removeBall(ball, all_sprites_list)
-            speed = [4,4]
-            bluePts = bluePts + 1
-
-            
-
-        if ball.rect.y > SCREENHEIGHT - ball.height or ball.rect.y < 0:
-            speed[1] = -speed[1]
-
-
-        ball.move(speed[0], speed[1])
-
-        if (redPts > 0 or bluePts > 0):
-            playingGame = False
-
-        #Refresh Screen
-        renderedText = updateScore(redPts, bluePts)
-        screen.blit(renderedText, (SCREENWIDTH/4, 10))
-        pygame.display.flip()
-
-        #Number of frames per secong e.g. 60
-        clock.tick(60)
-        #end playingGame
-    print("game over")
-    game_over(playingGame, gameOn)
- 
+    #Number of frames per secong e.g. 60
+    clock.tick(60)
+    #end playingGame
 
 #outside of all while loops
 pygame.quit()
