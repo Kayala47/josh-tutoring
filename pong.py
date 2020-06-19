@@ -20,6 +20,23 @@ speed = [4,4]
 paddleSpeed = [0,4]
 
 font_name = pygame.font.match_font('arial')
+
+def game_over(playingGame, gameOn):
+    userInput = input("Would you like to play again? (y/n)")
+
+    if (userInput == "y"):
+        gameOn = True
+        playingGame = True
+    elif (userInput == "n"):
+        gameOn = False
+        playingGame = False
+    else:
+        print("Error, Error, you put in the wrong input. Please enter a 'y' or 'n'")
+        game_over(playingGame, gameOn)
+    
+
+
+
 def draw_text(surf, text, size, x, y):
     font = pygame.font.Font(font_name, size)
     text_surface = font.render(text, True, WHITE)
@@ -127,29 +144,27 @@ redPts = 0
 bluePts = 0
 
 #Allowing the user to close the window...
-carryOn = True
-clock=pygame.time.Clock()
- 
-while carryOn:
+playingGame = True
+gameOn = True
 
-            
+clock=pygame.time.Clock()
+
+
+while gameOn:
+ 
+    while playingGame:
+        
         for event in pygame.event.get():
             if event.type==pygame.QUIT:
-                carryOn=False
+                playingGame=False
+                gameOn = False
 
         updatePaddle(paddle, (pygame.K_w, pygame.K_s))
         updatePaddle(redPaddle, (pygame.K_UP, pygame.K_DOWN))
-        
-
-        
-        for event in pygame.event.get():
-            if event.type==pygame.QUIT:
-                carryOn=False
-                
 
         #Game Logic
         all_sprites_list.update()
- 
+
         #Drawing on Screen
         screen.fill(BLACK)
         
@@ -177,13 +192,9 @@ while carryOn:
         if ((paddle.top > ball.bottom and ball.right <= paddle.right) or
         (paddle.bottom < ball.top and ball.right <= paddle.right)):
             #ball goes through left side
-
-            print("I think it missed the left side")
-            
             ball = removeBall(ball, all_sprites_list)
             speed = [4,4]
             redPts = redPts + 1
-            print(redPts)
             
 
         elif ((redPaddle.top > ball.bottom and ball.left >= redPaddle.left) or
@@ -193,12 +204,7 @@ while carryOn:
             ball = removeBall(ball, all_sprites_list)
             speed = [4,4]
             bluePts = bluePts + 1
-            print(bluePts)
 
-            
-            
-
-            
             
 
         if ball.rect.y > SCREENHEIGHT - ball.height or ball.rect.y < 0:
@@ -206,14 +212,21 @@ while carryOn:
 
 
         ball.move(speed[0], speed[1])
- 
+
+        if (redPts > 0 or bluePts > 0):
+            playingGame = False
+
         #Refresh Screen
         renderedText = updateScore(redPts, bluePts)
         screen.blit(renderedText, (SCREENWIDTH/4, 10))
         pygame.display.flip()
-        
- 
+
         #Number of frames per secong e.g. 60
         clock.tick(60)
+        #end playingGame
+    print("game over")
+    game_over(playingGame, gameOn)
  
+
+#outside of all while loops
 pygame.quit()
