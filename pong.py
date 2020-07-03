@@ -257,8 +257,6 @@ while playingGame:
     
 
 
-    
-
     #Number of frames per secong e.g. 60
     clock.tick(60)
     #end playingGame
