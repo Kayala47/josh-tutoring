@@ -38,6 +38,15 @@ def game_over(playingGame, gameOn):
         print("Error, Error, you put in the wrong input. Please enter a 'y' or 'n'")
         game_over(playingGame, gameOn)
     
+def wait():
+        while True:
+            for event in pygame.event.get():
+                if event.type == QUIT or (event.type == KEYDOWN and event.key == K_x):
+                    pygame.quit()
+                    sys.exit()
+                if event.type == KEYDOWN and event.key == K_SPACE:
+                    return True
+
 
 
 
@@ -115,12 +124,13 @@ def updateScore(redPts, bluePts, endGame):
     
     x = SCREENWIDTH/4
     y = 10
+
 renderedText = updateScore
 
 def refresh(updateScore, redPts, bluePts, renderedText, didTheGameEnd):
     if didTheGameEnd:
         renderedText = updateScore(redPts, bluePts, True)
-        screen.blit(renderedText, (SCREENWIDTH/8, 10))
+        screen.blit(renderedText, (SCREENWIDTH/8, 100))
         pygame.display.flip()
     if not didTheGameEnd:
         renderedText = updateScore(redPts, bluePts, False)
@@ -244,8 +254,16 @@ while playingGame:
         
         refresh(updateScore, redPts, bluePts, renderedText, True)
         screen.blit(black_image, (0, 0))
+
+
+        if (wait()):
+            main()
+        
+
         pygame.display.update()
-        done = False
+        #done = False
+
+        
         
 
 
