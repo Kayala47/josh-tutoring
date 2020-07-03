@@ -15,6 +15,10 @@ SCREENWIDTH=800
 
 SCREENHEIGHT=650
 
+sizeOfTheScreen  = width, height =(800, 650)
+black_image = pygame.Surface(sizeOfTheScreen)
+black_image.set_alpha(255)
+pygame.draw.rect(black_image, BLACK, black_image.get_rect(), 255)
 
 speed = [4,4]
 paddleSpeed = [0,4]
@@ -45,8 +49,8 @@ def draw_text(surf, text, size, x, y):
     surf.blit(text_surface, text_rect)
 
 def increase_speed(speed):
-    changingSpeed = 1
-    speedLimit = 4
+    changingSpeed = 0.4
+    speedLimit = 7
 
     #gives that variable a new value
     
@@ -79,6 +83,9 @@ def removeBall(ball, spritesList):
 
     return ball
     
+
+
+
 def updatePaddle(paddle, upDown):
     keyPressed = pygame.key.get_pressed()
 
@@ -95,7 +102,7 @@ def updatePaddle(paddle, upDown):
 
 def updateScore(redPts, bluePts, endGame):
     #draw_text = def draw_text(surf, text, size, x, y):
-
+    
     size = 25
     font_type = pygame.font.SysFont('arial', size)
 
@@ -104,13 +111,24 @@ def updateScore(redPts, bluePts, endGame):
     else:
         text = "Game Over. Press spacebar to play again or x to quit"
 
-    
+    return font_type.render(text, True, WHITE)
     
     x = SCREENWIDTH/4
     y = 10
+renderedText = updateScore
+
+def refresh(updateScore, redPts, bluePts, renderedText, didTheGameEnd):
+    if didTheGameEnd:
+        renderedText = updateScore(redPts, bluePts, True)
+        screen.blit(renderedText, (SCREENWIDTH/8, 10))
+        pygame.display.flip()
+    if not didTheGameEnd:
+        renderedText = updateScore(redPts, bluePts, False)
+        screen.blit(renderedText, (SCREENWIDTH/4, 10))
+        pygame.display.flip()
 
     
-    return font_type.render(text, True, WHITE)
+    
 
     
     
@@ -218,35 +236,27 @@ while playingGame:
 
 
     ball.move(speed[0], speed[1])
+    
+    if (redPts < 1 or bluePts < 1):
+        refresh(updateScore, redPts, bluePts, renderedText, False)
 
-    # if (redPts > 0 or bluePts > 0):
-    #     renderedText = updateScore(redPts, bluePts, False)
-    #     screen.blit(renderedText, (SCREENWIDTH/4, 10))
-    #     pygame.display.flip()
-
-    #     done = False
-
-    #     while not done:
-    #         for event in pygame.event.get():
-    #             if event.type == pygame.KEYDOWN:
-    #                 if event.mod == pygame.K_SPACE:
-    #                     print("space was entered")
-    #                     done = True
-                        
-    #     #     keyPressed = pygame.key.get_pressed()
-    #     #     if (keyPressed == pygame.K_SPACE):
-    #     #         playingGame = True
-    #     #         done = True
-    #     #     elif (keyPressed == pygame.K_x):
-    #     #         playingGame = False
-    #     #         done = True
+    if (redPts > 0 or bluePts > 0):
+        
+        refresh(updateScore, redPts, bluePts, renderedText, True)
+        screen.blit(black_image, (0, 0))
+        pygame.display.update()
+        done = False
+        
 
 
+        # while not done:
+        #     for event in pygame.event.get():
+        #         if event.type == pygame.K_DOWN:
+        #             def error2():
+        #                 print("error")
+    
 
-    #Refresh Screen
-    renderedText = updateScore(redPts, bluePts, False)
-    screen.blit(renderedText, (SCREENWIDTH/4, 10))
-    pygame.display.flip()
+
     
 
     #Number of frames per secong e.g. 60
