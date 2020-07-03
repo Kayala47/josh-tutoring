@@ -231,11 +231,8 @@ def main():
                     playerContinues = True
                 else:
                     playerContinues = False
-                
 
             if keyPressed == pygame.K_SPACE:
-
-
 
             if playerContinues:
                 main()
