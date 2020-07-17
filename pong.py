@@ -41,13 +41,20 @@ def game_over(playingGame, gameOn):
 def wait():
         while True:
             for event in pygame.event.get():
-                if event.type == QUIT or (event.type == KEYDOWN and event.key == K_x):
-                    pygame.quit()
-                    sys.exit()
-                if event.type == KEYDOWN and event.key == K_SPACE:
-                    return True
+                if event.type == pygame.QUIT or (event.type == pygame.KEYDOWN and event.key == pygame.K_x):
+                    return (True, False)
+                if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
+                    return (True, True)
 
 
+def removeObject(obj, spritesList):
+    spritesList.remove(obj)
+
+    obj.kill()
+
+# def addObject(obj, spritesList):
+
+    
 
 
 def draw_text(surf, text, size, x, y):
@@ -137,12 +144,7 @@ def refresh(updateScore, redPts, bluePts, renderedText, didTheGameEnd):
         screen.blit(renderedText, (SCREENWIDTH/4, 10))
         pygame.display.flip()
 
-    
-    
-
-    
-    
-    
+ 
 size = (SCREENWIDTH, SCREENHEIGHT)
 screen = pygame.display.set_mode(size)
 pygame.display.set_caption("Ping Pong")
@@ -222,7 +224,6 @@ while playingGame:
         speed[0] = -speed[0]
         
 
-
     if ((paddle.top > ball.bottom and ball.right <= paddle.right) or
     (paddle.bottom < ball.top and ball.right <= paddle.right)):
         #ball goes through left side
@@ -253,11 +254,23 @@ while playingGame:
     if (redPts > 0 or bluePts > 0):
         
         refresh(updateScore, redPts, bluePts, renderedText, True)
-        screen.blit(black_image, (0, 0))
 
+        playerResponded = False
+        playAgain = False
 
-        if (wait()):
-            main()
+        while(not playerResponded):
+            screen.blit(black_image, (0, 0))
+            (playerResponded, playAgain) = wait()
+
+            if (playerResponded and playAgain):
+                print('play again')
+                redPts = 0
+                bluePts = 0
+            elif (playerResponded and not playAgain):
+                pygame.quit()
+            
+        # if (wait()):
+        #     main()
         
 
         pygame.display.update()
