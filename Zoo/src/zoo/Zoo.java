@@ -21,10 +21,17 @@ public class Zoo {
 		 * Owl
 		 * Elephant
 		 * Penguin
-		 * 
+		 * Eagle
 		 * 
 		 * 
 		 */
+	/*
+	 * 
+	 * HW: make three new animals and one new worker	
+	 */
+		
+		
+		System.out.println("Zoo");
 		
 		
 		
