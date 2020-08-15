@@ -19,6 +19,8 @@ public class Elephant extends Animal {
 		
 	public Elephant(String name){
 		
+		super("Elephant");
+		
 		name = DEFAULT_NAME;
 		
 		
@@ -27,7 +29,7 @@ public class Elephant extends Animal {
 		
 	}
 	
-	public amHungry() {
+	public boolean amHungry() {
 		
 		
 		return true;

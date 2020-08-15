@@ -19,6 +19,8 @@ public class Penguin extends Animal {
 	
 	public Penguin(String name){
 		
+		super("Penguin");
+		
 		name = DEFAULT_NAME;
 		
 		
@@ -27,7 +29,7 @@ public class Penguin extends Animal {
 		
 	}
 	
-	public amHungry() {
+	public boolean amHungry() {
 		
 		
 		return true;
