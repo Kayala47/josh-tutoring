@@ -16,7 +16,7 @@ public class Elephant extends Animal {
 	
 	public static String name;
 	
-		
+	
 	public Elephant(String name){
 		
 		super("Elephant");
