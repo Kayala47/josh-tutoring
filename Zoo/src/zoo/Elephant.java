@@ -23,9 +23,7 @@ public class Elephant extends Animal {
 		
 		name = DEFAULT_NAME;
 		
-		
-		
-		
+	
 		
 	}
 	

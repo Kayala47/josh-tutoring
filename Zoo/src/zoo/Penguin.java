@@ -23,9 +23,7 @@ public class Penguin extends Animal {
 		
 		name = DEFAULT_NAME;
 		
-		
-		
-		
+	
 		
 	}
 	
