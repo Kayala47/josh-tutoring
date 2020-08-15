@@ -18,12 +18,7 @@ def main():
 
     SCREENHEIGHT=650
 
-
-sizeOfTheScreen  = width, height =(800, 650)
-black_image = pygame.Surface(sizeOfTheScreen)
-black_image.set_alpha(255)
-pygame.draw.rect(black_image, BLACK, black_image.get_rect(), 255)
-
+    playerContinues = True
 
     speed = [4,4]
     paddleSpeed = [0,4]
@@ -33,35 +28,17 @@ pygame.draw.rect(black_image, BLACK, black_image.get_rect(), 255)
     def game_over(playingGame, gameOn):
         userInput = input("Would you like to play again? (y/n)")
 
+        if (userInput == "y"):
+            gameOn = True
+            playingGame = True
+        elif (userInput == "n"):
+            gameOn = False
+            playingGame = False
+        else:
+            print("Error, Error, you put in the wrong input. Please enter a 'y' or 'n'")
+            game_over(playingGame, gameOn)
+        
 
-    if (userInput == "y"):
-        gameOn = True
-        playingGame = True
-    elif (userInput == "n"):
-        gameOn = False
-        playingGame = False
-    else:
-        print("Error, Error, you put in the wrong input. Please enter a 'y' or 'n'")
-        game_over(playingGame, gameOn)
-    
-def wait():
-        while True:
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT or (event.type == pygame.KEYDOWN and event.key == pygame.K_x):
-                    return (True, False)
-                if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
-                    return (True, True)
-
-
-
-def removeObject(obj, spritesList):
-    spritesList.remove(obj)
-
-    obj.kill()
-
-# def addObject(obj, spritesList):
-
-    
 
 
     def draw_text(surf, text, size, x, y):
@@ -71,11 +48,9 @@ def removeObject(obj, spritesList):
         text_rect.midtop = (x, y)
         surf.blit(text_surface, text_rect)
 
-
-def increase_speed(speed):
-    changingSpeed = 0.4
-    speedLimit = 7
-
+    def increase_speed(speed):
+        changingSpeed = 1
+        speedLimit = 8
 
         #gives that variable a new value
         
@@ -106,14 +81,10 @@ def increase_speed(speed):
 
         spritesList.add(ball)
 
-    return ball
-    
-
-
-
-def updatePaddle(paddle, upDown):
-    keyPressed = pygame.key.get_pressed()
-
+        return ball
+        
+    def updatePaddle(paddle, upDown):
+        keyPressed = pygame.key.get_pressed()
 
         (up, down) = upDown
 
@@ -126,43 +97,34 @@ def updatePaddle(paddle, upDown):
             if (paddle.rect.bottom + 10 <= SCREENHEIGHT):
                 paddle.move(0, 10)
 
-def updateScore(redPts, bluePts, endGame):
-    #draw_text = def draw_text(surf, text, size, x, y):
-    
-    size = 25
-    font_type = pygame.font.SysFont('arial', size)
+    def updateScore(redPts, bluePts, endGame):
+        #draw_text = def draw_text(surf, text, size, x, y):
 
+        size = 25
+        font_type = pygame.font.SysFont('arial', size)
 
         if not endGame:
             text = "Red has " + str(redPts) + " points. Blue has " + str(bluePts) + " points."
         else:
             text = "Game Over. Press spacebar to play again or x to quit"
 
-    return font_type.render(text, True, WHITE)
+        
+        
+        x = SCREENWIDTH/4
+        y = 10
+
+        
+        return font_type.render(text, True, WHITE)
+
+        
+        
+        
+    size = (SCREENWIDTH, SCREENHEIGHT)
+    screen = pygame.display.set_mode(size)
+    pygame.display.set_caption("Ping Pong")
     
-    x = SCREENWIDTH/4
-    y = 10
-
-renderedText = updateScore
-
-def refresh(updateScore, redPts, bluePts, renderedText, didTheGameEnd):
-    if didTheGameEnd:
-        renderedText = updateScore(redPts, bluePts, True)
-        screen.blit(renderedText, (SCREENWIDTH/8, 100))
-        pygame.display.flip()
-    if not didTheGameEnd:
-        renderedText = updateScore(redPts, bluePts, False)
-        screen.blit(renderedText, (SCREENWIDTH/4, 10))
-        pygame.display.flip()
-
- 
-size = (SCREENWIDTH, SCREENHEIGHT)
-screen = pygame.display.set_mode(size)
-pygame.display.set_caption("Ping Pong")
- 
-#This will be a list that will contain all the sprites we intend to use in our game.
-all_sprites_list = pygame.sprite.Group()
-
+    #This will be a list that will contain all the sprites we intend to use in our game.
+    all_sprites_list = pygame.sprite.Group()
 
     #create the ball
     ball = Ball(SCREENWIDTH/2, SCREENHEIGHT/2, 0)
@@ -238,13 +200,13 @@ all_sprites_list = pygame.sprite.Group()
             
 
 
-    if ((paddle.top > ball.bottom and ball.right <= paddle.right) or
-    (paddle.bottom < ball.top and ball.right <= paddle.right)):
-        #ball goes through left side
-        ball = removeBall(ball, all_sprites_list)
-        speed = [4,4]
-        redPts = redPts + 1
-
+        if ((paddle.top > ball.bottom and ball.right <= paddle.right) or
+        (paddle.bottom < ball.top and ball.right <= paddle.right)):
+            #ball goes through left side
+            ball = removeBall(ball, all_sprites_list)
+            speed = [4,4]
+            redPts = redPts + 1
+            
 
         elif ((redPaddle.top > ball.bottom and ball.left >= redPaddle.left) or
         (redPaddle.bottom < ball.top and ball.left >= redPaddle.left)):
@@ -260,53 +222,58 @@ all_sprites_list = pygame.sprite.Group()
             speed[1] = -speed[1]
 
 
+        ball.move(speed[0], speed[1])
 
-    ball.move(speed[0], speed[1])
-    
-    if (redPts < 1 or bluePts < 1):
-        refresh(updateScore, redPts, bluePts, renderedText, False)
+        if (redPts > 0 or bluePts > 0):
 
-    if (redPts > 0 or bluePts > 0):
-        
-        refresh(updateScore, redPts, bluePts, renderedText, True)
+            for event in pygame.event.get():
+                if event.type==pygame.K_SPACE:
+                    playerContinues = True
+                else:
+                    playerContinues = False
 
-        playerResponded = False
-        playAgain = False
+            #if keyPressed == pygame.K_SPACE:
 
-        while(not playerResponded):
-            screen.blit(black_image, (0, 0))
-            (playerResponded, playAgain) = wait()
-
-            if (playerResponded and playAgain):
-                print('play again')
-                redPts = 0
-                bluePts = 0
-            elif (playerResponded and not playAgain):
-                pygame.quit()
+                if playerContinues:
+                    
+            else:
+                pygame.QUIT
             
-        # if (wait()):
-        #     main()
+        #     renderedText = updateScore(redPts, bluePts, False)
+        #     screen.blit(renderedText, (SCREENWIDTH/4, 10))
+        #     pygame.display.flip()
+
+        #     done = False
+
+        #     while not done:
+        #         for event in pygame.event.get():
+        #             if event.type == pygame.KEYDOWN:
+        #                 if event.mod == pygame.K_SPACE:
+        #                     print("space was entered")
+        #                     done = True
+                            
+        #     #     keyPressed = pygame.key.get_pressed()
+        #     #     if (keyPressed == pygame.K_SPACE):
+        #     #         playingGame = True
+        #     #         done = True
+        #     #     elif (keyPressed == pygame.K_x):
+        #     #         playingGame = False
+        #     #         done = True
+
+
+
+        #Refresh Screen
+        renderedText = updateScore(redPts, bluePts, False)
+        screen.blit(renderedText, (SCREENWIDTH/4, 10))
+        pygame.display.flip()
         
 
-        pygame.display.update()
-        #done = False
+        #Number of frames per secong e.g. 60
+        clock.tick(60)
+        #end playingGame
 
-        
-        
-
-
-        # while not done:
-        #     for event in pygame.event.get():
-        #         if event.type == pygame.K_DOWN:
-        #             def error2():
-        #                 print("error")
-    
-
-
-    #Number of frames per secong e.g. 60
-    clock.tick(60)
-    #end playingGame
-
+        #outside of all while loops
+    pygame.quit()
 
 if __name__ == "__main__":
     #when you run the file, run the main function
