@@ -2,7 +2,7 @@ package zoo;
 
 public class Cashier extends Worker {
 	
-	public int food;
+	public int Money;
 	
 	public Cashier(int strength, String name, float salary, int speed) {
 		
@@ -15,7 +15,7 @@ public class Cashier extends Worker {
 	
 	public void getFood() {
 		
-		food += 3;
+		Money += 3;
 		
 		
 	}

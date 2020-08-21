@@ -2,7 +2,7 @@ package zoo;
 
 public class Feeder extends Worker {
 	
-	public int Money;
+	public int Food;
 	
 	public Feeder(int strength, String name, float salary, int speed) {
 		
@@ -15,7 +15,7 @@ public class Feeder extends Worker {
 	
 	public void getFood() {
 		
-		Money += 3;
+		Food += 3;
 		
 		
 	}
