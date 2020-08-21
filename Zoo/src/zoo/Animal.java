@@ -4,6 +4,10 @@ public class Animal extends Zoo {
 	
 	public Animal animal;
 	
+	public boolean alreadyFed;
+	
+	public static final int VALUE = 1;
+	
 	public Animal(String type) {
 		
 		if (type == "penguin") {
@@ -11,9 +15,6 @@ public class Animal extends Zoo {
 			animal = new Penguin("Tyler");
 			
 		}
-		
-		
-		
 		
 		
 		
@@ -32,6 +33,20 @@ public class Animal extends Zoo {
 		
 		
 		return true;
+	}
+	
+	public void getFed() {
+		
+		alreadyFed = true;
+		
+	}
+	
+	public int howMuchFood() {
+		return animal.howMuchFood();
+	}
+	
+	public int getValue() {
+		return this.VALUE;
 	}
 	
 	

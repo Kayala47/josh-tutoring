@@ -16,6 +16,8 @@ public class Liger extends Animal {
 	
 	public static String name;
 	
+	public static boolean alreadyFed;
+	
 	
 	public Liger(String name){
 		
@@ -30,7 +32,7 @@ public class Liger extends Animal {
 	public boolean amHungry() {
 		
 		
-		return true;
+		return !alreadyFed;
 	}
 	
 	

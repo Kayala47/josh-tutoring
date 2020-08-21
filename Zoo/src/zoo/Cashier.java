@@ -2,20 +2,22 @@ package zoo;
 
 public class Cashier extends Worker {
 	
-	public int food;
+	public int money;
 	
-	public Cashier(int strength, String name, float salary, int speed) {
+	public Cashier(String name, double salary, int tickets) {
 		
 		super(name, salary);
 		
-		
+	
 		
 		
 	}
 	
 	public void getFood() {
 		
-		food += 3;
+		money += 3;
+		
+		
 		
 		
 	}

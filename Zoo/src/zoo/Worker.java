@@ -8,7 +8,7 @@ public class Worker extends Zoo{
 	
 
 	
-	public Worker(String name, float salary) {
+	public Worker(String name, double salary) {
 		
 		
 		

@@ -15,6 +15,7 @@ public class Penguin extends Animal {
 	
 	public static String name;
 	
+	public static boolean alreadyFed;
 	
 	
 	public Penguin(String name){
@@ -30,7 +31,7 @@ public class Penguin extends Animal {
 	public boolean amHungry() {
 		
 		
-		return true;
+		return !alreadyFed;
 	}
 	
 	

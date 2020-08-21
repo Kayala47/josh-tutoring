@@ -50,6 +50,27 @@ public class Zoo {
 		
 		workerList = createWorkers();
 		
+		Animal el = new Elephant("Sheila");
+		
+		System.out.println(el.getValue());
+		
+		
+		System.out.println("Welcome!");
+		
+		//Josh's HW:
+		//turn local variables in constructors to global
+		//finish the follwoing steps:
+		
+		//feed all the animals
+		
+		//sell tickets
+		
+		//people enter
+		
+		//count money
+		
+		
+		
 		//TODO: Find out what animals need
 		
 		
@@ -94,6 +115,11 @@ public class Zoo {
 		
 		Worker[] workerList = new Worker[4];
 		
+		workerList[0] = new Feeder("Grover", 20.0, 100);
+		
+		workerList[1] = new Cashier("Luke", 22.0, 100);
+		
+		
 		return workerList;
 		// TODO Auto-generated method stub
 		
@@ -103,6 +129,11 @@ public class Zoo {
 	private static Animal[] createAnimals() {
 		
 		Animal[] animalList = new Animal[4];
+		
+		animalList[0] = new Owl("Greg");
+		animalList[1] = new Eagle("Henry");
+		animalList[2] = new Elephant("Sheila");
+		animalList[3] = new Liger("Jack");
 		
 		
 		return animalList;
