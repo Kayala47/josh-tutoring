@@ -62,12 +62,66 @@ public class Zoo {
 		//finish the follwoing steps:
 		
 		//feed all the animals
+		/*
+		 * 1. Check how much food we have - CEO
+		 * 2. See how much animals eat - Animal
+		 * 3. How much we have after each animal - Feeder
+		 * 4. How much we have after the whole day - restock - CEO
+		 * 
+		 */
+		
+		Feeder feeder =  (Feeder) workerList[0];
+		int food = feeder.getFood();
+		
+//		double ex1 = 10.0;
+//		double ex2 = 5;
+//		double result = (int) ex1 - ex2;
+		
+		System.out.println(food);
+		
+		
+		//for loop
+		for (int i = 0; i < animalList.length; i++) {
+			
+			Animal animal = animalList[i];
+			
+			int foodEaten = animal.howMuchFood();
+			
+			if (food < foodEaten) {
+				System.out.println("Hey CEO, I bought more food!");
+				feeder.restockFood();
+				
+			} 
+			
+			feeder.feed(animal);
+		
+			
+		}
+		
+		
+//		//while loop
+//		int i = 0;
+//		while (i < animalList.length) {
+//			
+//			
+//			i++;
+//		}
+		
+		
+		
 		
 		//sell tickets
 		
-		//people enter
+		Cashier cashier = (Cashier) workerList[1];
+		double money = 0;
 		
-		//count money
+		for (int tickets = cashier.getTickets(); tickets > 0; tickets--) {
+			
+			money += cashier.TICKET_PRICE;
+			
+			
+		}
+		
 		
 		
 		

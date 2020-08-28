@@ -42,7 +42,7 @@ public class Animal extends Zoo {
 	}
 	
 	public int howMuchFood() {
-		return animal.howMuchFood();
+		return 0;
 	}
 	
 	public int getValue() {

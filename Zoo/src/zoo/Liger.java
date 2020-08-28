@@ -9,6 +9,8 @@ public class Liger extends Animal {
 	//how often do they eat per day?
 	public static final int TIMES_A_DAY = 3;
 	
+	public static final int LBS_DAY = 5;
+	
 	//how much are they worth?
 	public static final int VALUE = 20;
 	
@@ -25,6 +27,8 @@ public class Liger extends Animal {
 		
 		name = DEFAULT_NAME;
 		
+		this.name = name;
+		
 	
 		
 	}
@@ -33,6 +37,10 @@ public class Liger extends Animal {
 		
 		
 		return !alreadyFed;
+	}
+	
+	public int howMuchFood() {
+		return LBS_DAY * TIMES_A_DAY;
 	}
 	
 	

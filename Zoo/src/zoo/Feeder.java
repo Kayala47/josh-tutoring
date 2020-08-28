@@ -16,11 +16,15 @@ public class Feeder extends Worker {
 		
 	}
 	
-	public void getFood() {
+	public void restockFood() {
 		
-		food += 10;
+		food += 100;
 		
 		
+	}
+	
+	public int getFood() {
+		return food;
 	}
 	
 	public void feed(Animal animal) {

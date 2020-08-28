@@ -46,6 +46,9 @@ public class Eagle extends Animal {
 		
 		
 	}
+	public int howMuchFood() {
+		return LBS_FOOD * TIMES_A_DAY;
+	}
 	
 	
 

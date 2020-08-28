@@ -9,6 +9,8 @@ public class Owl extends Animal {
 	//how often do they eat per day?
 	public static final int TIMES_A_DAY = 3;
 	
+	public static final int LBS_FOOD = 1;
+	
 	//how much are they worth?
 	public static final int VALUE = 11;
 	
@@ -33,6 +35,10 @@ public class Owl extends Animal {
 		
 		
 		return !alreadyFed;
+	}
+	
+	public int howMuchFood() {
+		return LBS_FOOD * TIMES_A_DAY;
 	}
 	
 	
