@@ -10,3 +10,5 @@ As you can see, I've made some changes. This README file will now be used to hos
 
 Your homework this week:
 - Read the tutorials on Java.Swing
+- Read this tutorial: http://www.edu4java.com/en/game/game6.html
+- Add a third object and make it move if it gets hit. It doesn't matter how it moves yet
