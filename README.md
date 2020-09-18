@@ -6,6 +6,8 @@ Here's the whereby link: https://whereby.com/kayala
 
 Here's the Zoom link: https://pomonacollege.zoom.us/j/96946769929
 
+Hey josh! Haven't seen you log on - please use the zoom link :)
+
 As you can see, I've made some changes. This README file will now be used to host announcements, and your weekly homework. I've transferred all the definitons we created into the definitons.txt file, so you can always access those there. 
 
 Your homework this week:
