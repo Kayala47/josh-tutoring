@@ -235,9 +235,9 @@ def main():
             #if keyPressed == pygame.K_SPACE:
 
                 if playerContinues:
-                    
-            else:
-                pygame.QUIT
+                    main()
+                else:
+                    pygame.QUIT
             
         #     renderedText = updateScore(redPts, bluePts, False)
         #     screen.blit(renderedText, (SCREENWIDTH/4, 10))
