@@ -1,0 +1,33 @@
+Main idea: side-scroller, slayer game
+
+Requirements
+- Multiple classes (selected randomly at first, then maybe a menu)
+  - warrior, mage
+- Moving enemies (dragon, _,)
+  - short distance (zombie)
+  - long distance (robot turrets - mortar)
+- dropped items 
+  - potions (couple types: health, speed, magic)
+  - ? better weapons/armor (if we finish)
+  - ? portals? (if we want to)
+- combat
+  - ? combos - press certain buttons in combination
+  to deal more damage
+- 2D
+-  Josh to draw pixel art
+
+
+TODO: 
+- https://dev.to/ablydev/building-a-realtime-multiplayer-browser-game-in-less-than-a-day-part-1-4-14pm
+- https://www.raywenderlich.com/2614-multiplayer-game-programming-for-teens-with-python-part-1
+- Read both of the above. 
+- Pixel art:
+  - mage
+  - warrior
+  - zombie
+  - robot
+  - dragon
+
+  
+  
+  
