@@ -2,7 +2,7 @@
 
 New update: you'll now find your weekly homeworks under the josh-hw file. I'll update that weekly and keep track of whether you've done it. 
 
-Here's the Zoom link: https://pomonacollege.zoom.us/j/86768964076
+Here's the Zoom link: https://pomonacollege.zoom.us/j/85088279778
 
 Hey josh! Haven't seen you log on - please use the zoom link :)
 
@@ -10,5 +10,4 @@ As you can see, I've made some changes. This README file will now be used to hos
 
 Your homework this week:
 - Read the tutorials on Java.Swing
-- Read this tutorial: http://www.edu4java.com/en/game/game6.html
-- Add a third object and make it move if it gets hit. It doesn't matter how it moves yet
+- Read this tutorial: https://dev.to/ablydev/building-a-realtime-multiplayer-browser-game-in-less-than-a-day-part-1-4-14pm
