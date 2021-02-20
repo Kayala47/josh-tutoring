@@ -10,4 +10,4 @@ As you can see, I've made some changes. This README file will now be used to hos
 
 Your homework this week:
 - Finish your work from class
-- Read parts 3 and 4 of this tutorial: https://www.techwithtim.net/tutorials/python-online-game-tutorial/client/
+- Read this: https://www.techwithtim.net/tutorials/python-online-game-tutorial/online-rock-paper-scissors-p-4/
