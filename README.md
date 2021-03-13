@@ -9,4 +9,4 @@ Hey josh! Haven't seen you log on - please use the zoom link :)
 As you can see, I've made some changes. This README file will now be used to host announcements, and your weekly homework. I've transferred all the definitons we created into the definitons.txt file, so you can always access those there. 
 
 Your homework this week:
-- find a background and put it into the game
+- make a new class to handle everything about the wizard. You should start with an Init() method that pops it into the window
