@@ -9,5 +9,4 @@ Hey josh! Haven't seen you log on - please use the zoom link :)
 As you can see, I've made some changes. This README file will now be used to host announcements, and your weekly homework. I've transferred all the definitons we created into the definitons.txt file, so you can always access those there. 
 
 Your homework this week:
-- for every line of code, write a comment describing what it does
-- for every variable, write the type, using the documentation we discussed earlier
+- update the take_damage() function in wizard to die and get erased if it goes below 0 health.
