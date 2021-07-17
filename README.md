@@ -2,7 +2,7 @@
 
 New update: you'll now find your weekly homeworks under the josh-hw file. I'll update that weekly and keep track of whether you've done it. 
 
-Here's the Zoom link: https://pomonacollege.zoom.us/j/86574869319
+Here's the Zoom link: https://pomonacollege.zoom.us/j/89755225711
 
 Hey josh! Haven't seen you log on - please use the zoom link :)
 
