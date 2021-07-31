@@ -9,4 +9,4 @@ Hey josh! Haven't seen you log on - please use the zoom link :)
 As you can see, I've made some changes. This README file will now be used to host announcements, and your weekly homework. I've transferred all the definitons we created into the definitons.txt file, so you can always access those there. 
 
 TODO for next week:
-- work on Ward position: make it spawn directly above the casting wizard's head
+- Blit the zombie, make the x and y, and stats
